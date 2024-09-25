@@ -1,0 +1,61 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: troand
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: shui-backend
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-north-1
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "*"
+
+build:
+  esbuild:
+    minify: true
+
+functions:
+  getMsg:
+    handler: handler.index
+    events:
+      - httpApi:
+          path: /
+          method: GET
+
+  postMsg:
+    handler: handler.index
+    events:
+      - httpApi:
+          path: /write
+          method: POST
+
+  putMsg:
+    handler: handler.index
+    events:
+      - httpApi:
+          path: /edit
+          method: PUT
+
+resources:
+  Resources:
+    shuiMsg:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: shuiMsg
+        AttributeDefinitions:
+          - AttributeName: msgId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: msgId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
