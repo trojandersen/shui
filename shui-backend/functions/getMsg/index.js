@@ -1,17 +1,16 @@
 const { sendResponse, sendError } = require("../../responses/index");
 const { db } = require("../../services/db");
 
-module.exports.handler = async (event) => {
-  
-  try {
-      const data = await db.scan({
-          TableName: 'shuiMsg',
-          ConsistentRead: true  // Ensuring strongly consistent reads
-      })
-      
-      return sendResponse(data)
-    } catch (error) {
-      return sendError(500, error)
-    }
-  
+async function getEvents() {
+  const { Items } = await db.scan({
+    TableName: 'shuiMsg',
+  });
+
+  return Items;
+}
+
+exports.handler = async (event) => {
+  const events = await getEvents();
+
+  return sendResponse(events);
 };
