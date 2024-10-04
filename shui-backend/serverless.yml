@@ -20,27 +20,23 @@ provider:
             - dynamodb:DeleteItem
           Resource: "*"
 
-build:
-  esbuild:
-    minify: true
-
 functions:
-  getMsg:
-    handler: handler.index
+  getMsgs:
+    handler: functions/getMsgs/index.handler
     events:
       - httpApi:
           path: /
           method: GET
 
   postMsg:
-    handler: handler.index
+    handler: functions/postMsg/index.handler
     events:
       - httpApi:
           path: /write
           method: POST
 
   putMsg:
-    handler: handler.index
+    handler: functions/putMsg/index.handler
     events:
       - httpApi:
           path: /edit
