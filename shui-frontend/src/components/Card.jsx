@@ -1,16 +1,15 @@
 const Card = ({ date, time, message, username }) => {
   return (
-    <div className="bg-gray-800 text-white rounded-lg shadow-md p-4 w-full max-w-md">
-      <div className="flex justify-between text-sm text-gray-400 mb-2">
-        <span>{date}</span>
-        <span>{time}</span>
+    <div className="bg-white rounded-lg shadow-md p-5 w-full max-w-sm">
+      <div className="text-sm text-gray-500">
+        <span>
+          {date}, {time}
+        </span>
       </div>
-      <div className="text-base mb-4">
+      <div className="my-5">
         <p>{message}</p>
       </div>
-      <div className="text-right text-sm text-gray-400">
-        {username && <span>— {username}</span>}
-      </div>
+      <div className="font-bold font-style: italic">— {username}</div>
     </div>
   );
 };
