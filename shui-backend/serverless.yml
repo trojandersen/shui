@@ -35,12 +35,19 @@ functions:
           path: /write
           method: POST
 
-  putMsg:
-    handler: functions/putMsg/index.handler
+  getMsgById:
+    handler: functions/getMsgById/index.handler
     events:
       - httpApi:
-          path: /edit
-          method: PUT
+          path: /edit/{msgId}
+          method: GET
+
+  patchMsg:
+    handler: functions/patchMsg/index.handler
+    events:
+      - httpApi:
+          path: /edit/{msgId}
+          method: PATCH
 
 resources:
   Resources:

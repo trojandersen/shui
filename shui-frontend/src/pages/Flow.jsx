@@ -14,19 +14,30 @@ const Flow = () => {
       }
       const result = await response.json();
       const data = result.data;
-      const formattedData = data.map((item) => ({
-        date: new Date(item.createdAt).toLocaleDateString("sv-SE", {
-          weekday: "long",
-          month: "long",
-          day: "numeric",
-        }),
-        time: new Date(item.createdAt).toLocaleTimeString([], {
-          hour: "numeric",
-          minute: "numeric",
-        }),
-        message: item.text,
-        username: item.username,
-      }));
+
+      const sortedData = data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+
+      const formattedData = sortedData.map((item) => {
+        const createdAt = new Date(item.createdAt);
+        const gmtPlusOne = new Date(createdAt.getTime() + 60 * 60 * 1000);
+
+        return {
+          msgId: item.msgId,
+          date: gmtPlusOne.toLocaleDateString("sv-SE", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+          }),
+          time: gmtPlusOne.toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "numeric",
+          }),
+          message: item.text,
+          username: item.username,
+        };
+      });
       setCardsData(formattedData);
     };
 
@@ -35,13 +46,14 @@ const Flow = () => {
 
   return (
     <div className="flex flex-col items-center gap-6">
-      {cardsData.map((card, index) => (
+      {cardsData.map((card) => (
         <Card
-          key={index}
+          key={card.msgId}
           date={card.date}
           time={card.time}
           message={card.message}
           username={card.username}
+          msgId={card.msgId}
         />
       ))}
     </div>

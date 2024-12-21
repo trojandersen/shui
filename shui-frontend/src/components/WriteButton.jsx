@@ -1,11 +1,14 @@
-import write from "../assets/write.svg";
+import writeIcon from "../assets/write.svg";
+import { Link } from "react-router-dom";
 
-function WriteButton() {
+const WriteButton = () => {
   return (
-    <div className="fixed bottom-10 right-10 z-10">
-      <img src={write} alt="writeButton" />
+    <div className="fixed bottom-5 right-5 z-10">
+      <Link to="/write">
+        <img src={writeIcon} alt="Write" />
+      </Link>
     </div>
   );
-}
+};
 
 export default WriteButton;

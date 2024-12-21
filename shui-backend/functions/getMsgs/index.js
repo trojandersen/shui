@@ -14,6 +14,6 @@ exports.handler = async (event) => {
     const data = await getMsgs();
     return sendResponse(data);
   } catch (error) {
-    return sendError(500, error);
+    return sendError(500, error.message);
   }
 };
