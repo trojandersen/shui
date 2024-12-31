@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Flow />} />
           <Route path="/write" element={<Write />} />
-          <Route path="/edit:msgId" element={<Edit />} />
+          <Route path="/edit/:msgId" element={<Edit />} />
         </Routes>
         <WriteButton />
       </BrowserRouter>
